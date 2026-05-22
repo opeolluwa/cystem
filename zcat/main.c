@@ -5,21 +5,26 @@ int main(int argc, char *argv[]) {
   FILE *fd[argc];
   if (argc <= 1) {
     fd[0] = stdin;
-  } else {
-      for (int i = 0; i < argc; i++) {
-        fd[i] = fopen(argv[i], "r"); 
-        if (fd[i] == NULL) {
-          exit(-1);
-        }
-      }
-  }
-
-  int c; 
-  for (int i = 0; i < argc; i++) {
-    while ((c = fgetc(fd[i])) != EOF) {
+    int c;
+    while ((c = fgetc(fd[0])) != EOF) {
       putc(c, stdout);
     }
+  } else {
+      
+    for (int i = 0; i < argc - 1; i++) {
+      fd[i] = fopen(argv[i+1], "r");
+      if (fd[i] == NULL) {
+        printf("Invalid file passed at index %d", i+1);
+        exit(-1);
+      }
+    }
+    
+    int c;
+    for (int i = 0; i < argc-1; i++) {
+      while ((c = fgetc(fd[i])) != EOF) {
+        putc(c, stdout);
+      }
+    }
   }
-
   return 0;
 }
