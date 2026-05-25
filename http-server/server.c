@@ -1,3 +1,5 @@
+//credit https://x.com/TheVixhal/status/2058579024008634376
+// 
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <stdio.h>
@@ -112,13 +114,14 @@ int main() {
 }
 
 void parse_request(char *request, char *method, char *path) {
-  scanf(request, "%s %s", method, path);
+  sscanf(request, "%s %s", method, path);
 }
 
 void send_response(int client_fd, int status_code, char *status_text,
                    char *content_type, char *body) {
   char response[4096];
   char body_len = strlen(body);
+  
   int response_len =
       snprintf(response, sizeof(response),
                "HTTP/1.1 %d %s\r\n"
@@ -128,6 +131,7 @@ void send_response(int client_fd, int status_code, char *status_text,
                "\r\n"
                "%s",
                status_code, status_text, content_type, body_len, body);
+  
   printf("SENDING RESPONSE:\n%s\n", response);
   write(client_fd, response, response_len);
 }
