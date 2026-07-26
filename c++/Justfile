@@ -1,0 +1,3 @@
+run path:
+    g++ -Wall "namespace.cpp" -o .out \
+    ./.out 
