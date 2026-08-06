@@ -17,3 +17,7 @@ System programmming (Backend and Linux) Roadmap
 - Operating Systems: Three Easy Pieces → Understand OS design.
 - TCP/IP Illustrated → Learn networking.
 - Continue building backend systems in Rust while applying what you learn.
+
+
+## Projects 
+- [Mule](./projects/mule) — CLI to generate new C++ project with CMake. 
