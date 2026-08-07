@@ -4,11 +4,16 @@
 
 int main() {
   std::string baseDir{};
+  const  std::string directories[]{
+      "src",
+      "include",
+      "external",
+      "assets"
+  };
 
   std::printf("Enter the base directory: ");
   std::cin >> baseDir;
-
   std::cout << " you entered " << baseDir << std::endl;
-  std::string directories[4]{"src", "include", "external", "assets"};
 
+  for(auto dir : directories) std::cout << dir <<std::endl;
 }
