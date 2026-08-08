@@ -10,6 +10,7 @@ System programmming (Backend and Linux) Roadmap
 
 ## Books
 
+- Beginning C++17: From Novice to Professional
 - Modern C Programming
 - CS:APP
 - Linux Kernel Development
