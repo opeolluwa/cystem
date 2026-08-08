@@ -8,22 +8,22 @@ add_executable(Tutorial)
 target_sources(Tutorial PRIVATE Tutorial/Tutorial.cxx)
 # TODO7: Add the MathFunctions library as a linked dependency
 #        to the Tutorial target
+target_link_libraries(Tutorial PRIVATE MathFunctions)
 
 # TODO11: Add the Tutorial subdirectory to the project
 
 # TODO5: Add a library target called MathFunctions to the project
-add_library(TutorialLibrary)
+add_library(MathFunctions)
 # TODO6: Add the source and header file located in Step1/MathFunctions to the
 #        MathFunctions target, note that the intended way to include the
 #        MathFunctions header is:
 #          #include <MathFunctions.h>
-target_sources(TutorialLibrary
+target_sources(MathFunctions
   PRIVATE 
     MathFunctions/MathFunctions.cxx
 
   PUBLIC
-    FILE_SET MathFunctionsHeaders
-    TYPE HEADERS
+    FILE_SET HEADERS
     BASE_DIRS
       MathFunctions
     FILES
