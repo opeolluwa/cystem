@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+// compile with g++ node-repl.cpp -o out -std=c++20 -Wall
 bool is_command(const std::string &command);
 
 int main() {
