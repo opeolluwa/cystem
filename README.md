@@ -23,4 +23,4 @@ System programmming (Backend and Linux) Roadmap
 ## Projects
 
 - [Mule](./projects/mule) — CLI to generate new C++ project with CMake.
-- [Forge](./projects/forge) — Rebuilding [https://github.com/opeolluwa/forge](forge) in C++
+- [Forge](./projects/forge) — Rebuilding [forge](https://github.com/opeolluwa/forge) in C++
