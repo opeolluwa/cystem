@@ -1,10 +1,9 @@
 // A simple program that computes the square root of a number
-#include <MathFunctions.h>
 #include <cmath>
 #include <iostream>
 #include <string>
 // TODO8: Include the MathFunctions header
-
+#include <MathFunctions.h>
 int main(int argc, char *argv[]) {
   if (argc < 2) {
     std::cout << "Usage: " << argv[0] << " number" << std::endl;
