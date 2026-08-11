@@ -1,15 +1,21 @@
+#include <commander.h>
 #include <cstddef>
 #include <cstdlib>
+#include <filesystem>
 #include <iostream>
-#include <string>
+#include <mule.h>
+#include <stdexcept>
 #include <structopt/app.hpp>
+#include <termcolor/termcolor.hpp>
+
+namespace fs = std::filesystem;
 
 struct Options {
 
   // create a new project in the preset working directory
   struct Init : structopt::sub_command {
     std::optional<std::string> name;
-    std::optional<std::string> path;
+    std::optional<std::string> path = ".";
   };
   Init init;
 
@@ -46,18 +52,18 @@ STRUCTOPT(Options::Exec, path);
 STRUCTOPT(Options, init, create, build, exec, watch);
 
 int main(int argc, char *argv[argc + 1]) {
-  std::string base_dir{};
-  const std::vector<std::string> directories{"src", "include", "external",
-                                             "assets"};
-  const std::vector<std::string> files{"CMakeList.txt"};
-
   try {
-    auto options{structopt::app("mule").parse<Options>(argc, argv)};
+    auto app{
+        structopt::app(mule::APP, mule::APP_VERSION, mule::APP_HELP_MESSAGE)};
+    auto options{app.parse<Options>(argc, argv)};
+
     if (options.init.has_value()) {
-      if (options.init.path.has_value())
-        std::cout << options.init.path.value();
-      if (options.init.name.has_value())
-        std::cout << options.init.name.value();
+      try {
+        commander::init_command(options.init.name, options.init.path);
+      } catch (const std::runtime_error &err) {
+        std::cout << termcolor::red << err.what() << std::endl;
+      }
+
     } else if (options.create.has_value()) {
       std::cout << "Creating project in " << options.create.path.value()
                 << std::endl;
@@ -70,12 +76,15 @@ int main(int argc, char *argv[argc + 1]) {
     } else if (options.exec.has_value()) {
       std::cout << "Executing project in " << options.exec.path.value()
                 << std::endl;
-    }
+    } else
+      std::cout << app.help() << std::endl;
 
   } catch (const structopt::exception &err) {
-    std::cerr << err.what() << std::endl;
+    std::cout << termcolor::red << err.what() << std::endl;
     std::cerr << err.help() << std::endl;
 
     return EXIT_FAILURE;
   }
+
+  return EXIT_SUCCESS;
 }
