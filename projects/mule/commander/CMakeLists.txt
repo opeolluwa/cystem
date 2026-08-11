@@ -11,3 +11,4 @@ target_sources(commander
 )
 
 target_link_libraries(commander PUBLIC termcolor::termcolor)
+target_include_directories(commander PRIVATE ${CMAKE_SOURCE_DIR}/include)

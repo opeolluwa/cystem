@@ -3,9 +3,11 @@
 #include <cstdlib>
 #include <filesystem>
 #include <iostream>
+#include <mule.h>
 #include <stdexcept>
 #include <string>
 #include <termcolor/termcolor.hpp>
+#include <vector>
 
 namespace fs = std::filesystem;
 
@@ -37,11 +39,12 @@ void init_command(const std::optional<std::string> &name,
       std::exit(EXIT_FAILURE);
   }
 
-  std::cout << "name " << application_name << " path " << target_dir;
-  // if (!fs::is_empty(current_path)) {
-  //   std::cout << termcolor::yellow << "current path is not empty" <<
-  //   std::endl;
-  // }
+  std::vector<fs::path> dirs{};
+  for (auto dir : mule::PROJECT_DIRS) {
+    fs::path full_path{fs::path(target_dir) / dir};
+    dirs.push_back(full_path);
+    std::cout << full_path;
+  }
 }
 
 }; // namespace commander

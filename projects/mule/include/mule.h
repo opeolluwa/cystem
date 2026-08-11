@@ -1,7 +1,7 @@
 
 #pragma once
-
-
+#include <vector>
+#include <string>
 namespace mule {
 
 const std::string APP = "mule";
@@ -129,4 +129,8 @@ const std::string APP_HELP_MESSAGE =
 
     Use 'mule <SUBCOMMAND> --help' for more information about a command.
     )";
+
+const std::vector<std::string> PROJECT_DIRS{"src", "include", "external", "assets"};
+const std::vector<std::string> PROJECT_FILES{"CMakeList.txt", "mule.toml"};
+
 } // namespace mule
