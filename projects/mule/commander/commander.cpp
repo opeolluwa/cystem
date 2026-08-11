@@ -41,9 +41,16 @@ void init_command(const std::optional<std::string> &name,
 
   std::vector<fs::path> dirs{};
   for (auto dir : mule::PROJECT_DIRS) {
-    fs::path full_path{fs::path(target_dir) / dir};
-    dirs.push_back(full_path);
-    std::cout << full_path;
+    fs::path full_dir_path{fs::path(target_dir) / dir};
+    dirs.push_back(full_dir_path);
+    std::cout << full_dir_path;
+  }
+
+  std::vector<fs::path> files{};
+  for (auto file : mule::PROJECT_FILES) {
+    fs::path full_file_path{fs::path(target_dir) / file};
+    files.push_back(full_file_path);
+    std::cout << full_file_path;
   }
 }
 
