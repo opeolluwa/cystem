@@ -9,3 +9,5 @@ target_sources(commander
       FILES
         commander.h
 )
+
+target_link_libraries(commander PUBLIC termcolor::termcolor)
