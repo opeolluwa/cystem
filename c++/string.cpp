@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <cstdint>
 #include <iostream>
 #include <string>
 
@@ -33,7 +34,37 @@ int main() {
   std::string attributes{"cycling"};
 
   attributes = " is cycling ";
-  std::string possibilities{noun  + attributes};
+  std::string possibilities{noun + attributes};
 
   std::cout << possibilities << std::endl;
+
+  std::string testes{" uuu"
+                     " test " +
+                     noun};
+  std::cout << testes << std::endl;
+
+  // using append
+  std::string first_name, second, full_name;
+  std::cout << "Enter your names";
+
+  // std::cin >> first_name;
+  // std::cin >> second;
+
+  // full_name = first_name.append(" ").append(second);
+  // std::cout << "your full name is " << full_name << std::endl;
+
+  // full_name.c_str();
+  //
+  int64_t answer{56};
+  std::string response{" result  is"};
+
+  // std::string erratic_answer{response + 56};
+  // strings and numbers
+  std::string valid_answer{response + std::to_string(answer)};
+
+  std::cout << " " << " valid " << valid_answer << std::endl;
+
+  // characters in a string
+  for (auto ch : valid_answer)
+    std::cout << ch << std::endl;
 }
