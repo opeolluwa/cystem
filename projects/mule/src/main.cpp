@@ -61,7 +61,8 @@ int main(int argc, char *argv[argc + 1]) {
       try {
         commander::init_command(options.init.name, options.init.path);
       } catch (const std::runtime_error &err) {
-        std::cout << termcolor::red << err.what() << std::endl;
+        std::cout << termcolor::red << err.what() << termcolor::reset
+                  << mule::APP_INIT_HELP_MESSAGE << std::endl;
       }
 
     } else if (options.create.has_value()) {
@@ -80,7 +81,7 @@ int main(int argc, char *argv[argc + 1]) {
       std::cout << app.help() << std::endl;
 
   } catch (const structopt::exception &err) {
-    std::cout << termcolor::red << err.what() << std::endl;
+    std::cout << termcolor::red << err.what() << termcolor::reset << std::endl;
     std::cerr << err.help() << std::endl;
 
     return EXIT_FAILURE;

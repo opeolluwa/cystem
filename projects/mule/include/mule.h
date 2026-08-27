@@ -130,6 +130,27 @@ const std::string APP_HELP_MESSAGE =
     Use 'mule <SUBCOMMAND> --help' for more information about a command.
     )";
 
+const std::string APP_INIT_HELP_MESSAGE = R"(
+    init
+        Initialize a new mule project in the current directory.
+
+        USAGE:
+            mule init [OPTIONS]
+
+        OPTIONS:
+            --name <NAME>
+                Name of the project to initialize.
+
+            --path <PATH>
+                Directory in which to initialize the project.
+                Defaults to the current directory (.).
+
+        EXAMPLES:
+            mule init --name myapp
+            mule init --name myapp --path ./projects/myapp
+
+)";
+
 const std::vector<std::string> PROJECT_DIRS{"src", "include", "external", "assets"};
 const std::vector<std::string> PROJECT_FILES{"CMakeList.txt", "mule.toml"};
 
