@@ -12,7 +12,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE termcolor::termcolor)
 add_executable(${PROJECT_NAME}_tests)
 target_sources(${PROJECT_NAME}_tests PRIVATE tests/boar_spec.cpp src/boar.cpp src/boar.hpp)
 target_include_directories(${PROJECT_NAME}_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(${PROJECT_NAME}_tests PRIVATE GTest::gtest_main)
+target_link_libraries(${PROJECT_NAME}_tests PRIVATE GTest::gtest_main  termcolor::termcolor)
 
 set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 include(FetchContent)
