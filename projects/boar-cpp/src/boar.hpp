@@ -11,8 +11,8 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
-#include <vector>
 #include <type_traits>
+#include <vector>
 
 namespace boar {
 
@@ -35,39 +35,35 @@ public:
   void exec(const boar::Options &option);
 };
 
-template <typename T>
-T parse_input(std::string_view prompt, bool as_boolean = false) {
-    std::cout << prompt << (as_boolean ? " y/n: " : ": ");
+template <typename T> T parse_input(std::string_view prompt) {
+  constexpr bool is_boolean = std::same_as<T, bool>;
+  std::cout << prompt << (is_boolean ? " y/n: " : ": ");
 
-    if constexpr (std::same_as<T, bool>) {
-        char result;
-        std::cin >> result;
+  if constexpr (is_boolean) {
+    char result;
+    std::cin >> result;
 
-        result = static_cast<char>(
-            std::tolower(static_cast<unsigned char>(result))
-        );
+    result =
+        static_cast<char>(std::tolower(static_cast<unsigned char>(result)));
 
-        if (result != 'y' && result != 'n') {
-            throw std::runtime_error(
-                std::format("invalid format, expected y/n got {}", result)
-            );
-        }
-
-        return result == 'y';
+    if (result != 'y' && result != 'n') {
+      throw std::runtime_error(
+          std::format("invalid format, expected y/n got {}", result));
     }
 
-    T value;
+    return result == 'y';
+  }
 
-    if (!(std::cin >> value)) {
-        std::cin.clear();
-        std::cin.ignore(
-            std::numeric_limits<std::streamsize>::max(),
-            '\n'
-        );
+  T value;
 
-        throw std::runtime_error("invalid format");
-    }
+  if (!(std::cin >> value)) {
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    return value;
+    throw std::runtime_error("invalid format");
+  }
+
+  return value;
 }
+
 }; // namespace boar
