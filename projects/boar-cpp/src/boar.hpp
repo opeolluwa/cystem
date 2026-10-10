@@ -154,6 +154,7 @@ template <typename T> T parse_input(std::string_view prompt) {
   T value;
 
   if (!(std::cin >> value)) {
+
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
