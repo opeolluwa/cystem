@@ -11,3 +11,5 @@ CTestTestfile.cmake
 _deps
 
 .cache
+c++/dynamic-memory/build/dynamicMemory
+c++/dynamic-memory/build/

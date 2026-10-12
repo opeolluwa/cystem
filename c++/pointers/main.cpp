@@ -12,7 +12,7 @@ int main() {
   const char *proverbs{"Many mickle makes a muckle"};
   std::cout << proverbs;
 
-    const char* const my_favorite_star{ "Lassie" };
+    const char* const my_favorite_star{ "Lassie" }; // const pointer to a constant variable prevents mutating thru the variable or pointer
     // my_favorite_star[0] ='w';
     // my_favorite_star = "alex";
   return 0;
