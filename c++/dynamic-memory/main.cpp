@@ -7,6 +7,7 @@ int main() {
   pValue = new double;
 
   *pValue = 3.142;
+
   std::cout << pValue << " " << *pValue << std::endl;
 
   // this can also be done as

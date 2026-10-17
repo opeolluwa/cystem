@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <iostream>
 #include <vector>
 int main() {
@@ -14,5 +15,6 @@ int main() {
   for (auto elem : *pdata)
     std::cout << elem << '\n';
 
-    
+  delete pdata;
+  pdata = nullptr;
 }
