@@ -2,7 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/projects/boar-cpp/build/_deps/termcolor-src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/projects/moses/build/_deps/termcolor-src" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/projects/mule/build/_deps/structopt-src" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/projects/mule/build/_deps/termcolor-src" vcs="Git" />
   </component>

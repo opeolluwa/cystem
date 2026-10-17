@@ -13,3 +13,6 @@ _deps
 .cache
 c++/dynamic-memory/build/dynamicMemory
 c++/dynamic-memory/build/
+c++/friends-list/build/friend-list
+c++/friends-list/build/
+c++/dynamic-vector/build/
