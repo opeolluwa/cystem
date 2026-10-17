@@ -15,7 +15,7 @@
 #include <type_traits>
 #include <vector>
 
-namespace boar {
+namespace moses {
 
 constexpr auto CMAKE_TEMPLATE = R"(cmake_minimum_required(VERSION {0})
     project({1})
@@ -36,6 +36,8 @@ constexpr auto GTEST_TEMPLATE = R"(enable_testing()
     target_include_directories(${{PROJECT_NAME}}_tests PRIVATE ${{CMAKE_CURRENT_SOURCE_DIR}})
     target_link_libraries(${{PROJECT_NAME}}_tests PRIVATE GTest::gtest_main)
 
+    set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
+    include(FetchContent)
     FetchContent_Declare(
       googletest
       URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
@@ -46,68 +48,96 @@ constexpr auto GTEST_TEMPLATE = R"(enable_testing()
 )";
 
 constexpr auto README_TEMPLATE = R"(# {0}
-    
-    Simple overview of use/purpose.
-    
-    ## Description
-    
-    An in-depth paragraph about your project and overview of use.
-    
-    ## Getting Started
-    
-    ### Dependencies
-    
-    * Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-    * ex. Windows 10
-    
-    ### Installing
-    
-    * How/where to download your program
-    * Any modifications needed to be made to files/folders
-    
-    ### Executing program
-    
-    * How to run the program
-    * Step-by-step bullets
-    ```
-    code blocks for commands
-    ```
-    
-    ## Help
-    
-    Any advise for common problems or issues.
-    ```
-    command to run if program contains helper info
-    ```
-    
-    ## Authors
-    
-    Contributors names and contact info
-    
-    ex. Dominique Pizzie
-    ex. [@DomPizzie](https://twitter.com/dompizzie)
-    
-    ## Version History
-    
-    * 0.2
-        * Various bug fixes and optimizations
-        * See [commit change]() or See [release history]()
-    * 0.1
-        * Initial Release
-    
-    ## License
-    
-    This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-    
-    ## Acknowledgments
-    
-    Inspiration, code snippets, etc.
-    * [awesome-readme](https://github.com/matiassingers/awesome-readme)
-    * [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-    * [dbader](https://github.com/dbader/readme-template)
-    * [zenorocha](https://gist.github.com/zenorocha/4526327)
-    * [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
-            )";
+
+Simple overview of use/purpose.
+
+## Description
+
+An in-depth paragraph about your project and overview of use.
+
+## Getting Started
+
+### Dependencies
+
+* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
+* ex. Windows 10
+
+### Installing
+
+* How/where to download your program
+* Any modifications needed to be made to files/folders
+
+### Executing program
+
+* How to run the program
+* Step-by-step bullets
+```
+code blocks for commands
+```
+
+## Help
+
+Any advise for common problems or issues.
+```
+command to run if program contains helper info
+```
+
+## Authors
+
+Contributors names and contact info
+
+ex. Dominique Pizzie
+ex. [@DomPizzie](https://twitter.com/dompizzie)
+
+## Version History
+
+* 0.2
+    * Various bug fixes and optimizations
+    * See [commit change]() or See [release history]()
+* 0.1
+    * Initial Release
+
+## License
+
+This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
+
+## Acknowledgments
+
+Inspiration, code snippets, etc.
+* [awesome-readme](https://github.com/matiassingers/awesome-readme)
+* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
+* [dbader](https://github.com/dbader/readme-template)
+* [zenorocha](https://gist.github.com/zenorocha/4526327)
+* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+)";
+
+constexpr auto MAIN_TEMPLATE = R"(#include "{0}.hpp"
+
+int main() {{
+  return 0;
+}}
+)";
+
+constexpr auto APP_HEADER_TEMPLATE = R"(#pragma once
+
+namespace {0} {{
+
+}} // namespace {0}
+)";
+
+constexpr auto APP_SOURCE_TEMPLATE = R"(#include "{0}.hpp"
+
+)";
+
+constexpr auto SPEC_TEMPLATE = R"(#include "src/{0}.hpp"
+#include <gtest/gtest.h>
+
+TEST({0}Test, BasicAssertions) {{
+  EXPECT_EQ(1, 1);
+}}
+)";
+
+
 struct Options {
   std::vector<std::string> dirs;
   std::string app_name;
@@ -117,7 +147,7 @@ struct Options {
   bool add_gtest;
 };
 
-class Boar {
+class Moses {
 private:
   Options option;
   std::string build_cmake_template();
@@ -125,8 +155,8 @@ private:
                             std::string_view content);
 
 public:
-  Boar() = default;
-  explicit Boar(const Options &opts);
+  Moses() = default;
+  explicit Moses(const Options &opts);
   Options parse_options();
   void exec();
 };
@@ -164,4 +194,4 @@ template <typename T> T parse_input(std::string_view prompt) {
   return value;
 }
 
-}; // namespace boar
+}; // namespace moses

@@ -27,20 +27,57 @@ Existing files are never overwritten silently — you are asked before each writ
 
 ### Installing
 
+Build from source:
+
 ```sh
 git clone https://github.com/opeolluwa/cystem
 cd cystem/projects/moses
-cmake -S . -B build
-cmake --build build
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j
+```
+
+`termcolor` and GoogleTest are fetched by CMake at configure time, so the first
+build needs network access.
+
+### Installing natively on Unix
+
+Install the built binary into your `PATH` so it can be run as `moses`:
+
+```sh
+# System-wide (needs sudo) -> /usr/local/bin/moses
+sudo cmake --install build --prefix /usr/local
+
+# ...or user-local, no sudo needed (~/.local/bin must be on your PATH)
+cmake --install build --prefix ~/.local
+```
+
+If `~/.local/bin` is not on your `PATH` yet, add it to your shell profile
+(`~/.zshrc`, `~/.bashrc`, ...):
+
+```sh
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+Without the CMake install step you can also copy the binary manually:
+
+```sh
+install -m 0755 build/moses /usr/local/bin/moses   # or ~/.local/bin
+```
+
+To remove it later:
+
+```sh
+sudo rm /usr/local/bin/moses   # or rm ~/.local/bin/moses
 ```
 
 ### Executing program
 
-Run the generator inside an empty directory:
+Once installed, use it directly from the CLI. Run the generator inside an empty
+directory:
 
 ```sh
 mkdir myapp && cd myapp
-/path/to/build/moses
+moses
 ```
 
 You will be prompted for:
