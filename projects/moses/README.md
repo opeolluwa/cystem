@@ -72,8 +72,19 @@ sudo rm /usr/local/bin/moses   # or rm ~/.local/bin/moses
 
 ### Executing program
 
-Once installed, use it directly from the CLI. Run the generator inside an empty
-directory:
+**Non-interactive (recommended)** — scaffold a new project from anywhere:
+
+```sh
+moses new myapp
+```
+
+This creates `myapp/`, using the directory name as the project name, and
+writes `CMakeLists.txt`, `README.md`, `.gitignore` and `src/` (no prompts).
+The CMake version is auto-detected from the installed `cmake` (falling back
+to `3.20` if CMake is unavailable). If the directory already exists the
+command aborts with an error.
+
+**Interactive** — run the generator inside an empty directory:
 
 ```sh
 mkdir myapp && cd myapp
@@ -96,8 +107,9 @@ add readme? y/n:
   `invalid format, expected y/n`.
 * When a target file already exists you are asked `... exists, overwrite?` —
   answer `n` to keep the existing file.
-* The CMake version you type is written verbatim into
-  `cmake_minimum_required` (there is a TODO to detect the installed version).
+* In interactive mode the CMake version you type is written verbatim into
+  `cmake_minimum_required`; `moses new` detects the installed version
+  automatically (`cmake --version`).
 
 ## Authors
 

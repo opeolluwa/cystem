@@ -3,6 +3,7 @@
 #include <cctype>
 #include <concepts>
 #include <exception>
+#include <filesystem>
 #include <format>
 #include <ios>
 #include <iostream>
@@ -111,6 +112,20 @@ Inspiration, code snippets, etc.
 * [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
 )";
 
+constexpr auto GITIGNORE_TEMPLATE = R"(CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+build
+)";
+
 constexpr auto MAIN_TEMPLATE = R"(#include "{0}.hpp"
 
 int main() {{
@@ -132,7 +147,7 @@ constexpr auto APP_SOURCE_TEMPLATE = R"(#include "{0}.hpp"
 constexpr auto SPEC_TEMPLATE = R"(#include "src/{0}.hpp"
 #include <gtest/gtest.h>
 
-TEST({0}Test, BasicAssertions) {{
+TEST({1}Test, BasicAssertions) {{
   EXPECT_EQ(1, 1);
 }}
 )";
@@ -145,11 +160,14 @@ struct Options {
   std::optional<std::string> cmake_version;
   bool add_readme;
   bool add_gtest;
+  std::string target_dir;
+  bool non_interactive = false;
 };
 
 class Moses {
 private:
   Options option;
+  std::filesystem::path base_path;
   std::string build_cmake_template();
   void file_exist_or_create(std::string_view file_name,
                             std::string_view content);
@@ -157,9 +175,13 @@ private:
 public:
   Moses() = default;
   explicit Moses(const Options &opts);
+  static Options parse_new_options(const std::vector<std::string> &args);
+  static std::string detect_cmake_version();
   Options parse_options();
   void exec();
 };
+
+void print_usage();
 
 template <typename T> T parse_input(std::string_view prompt) {
   constexpr bool is_boolean = std::same_as<T, bool>;
