@@ -1,4 +1,4 @@
-#include "moses.hpp"
+#include "moses.h"
 #include <array>
 #include <cstdio>
 #include <filesystem>
@@ -6,16 +6,14 @@
 #include <string>
 #include <string_view>
 
-using moses::Moses;
-using moses::Options;
-using moses::parse_input;
 using std::string;
 using std::string_view;
 
 namespace fs = std::filesystem;
 
 namespace {
-// C++ identifiers can't contain '-' etc. (e.g. dir "my-app" -> namespace my_app)
+// C++ identifiers can't contain '-' etc. (e.g. dir "my-app" -> namespace
+// my_app)
 string to_identifier(string_view name) {
   string result;
   result.reserve(name.size() + 1);
@@ -29,10 +27,10 @@ string to_identifier(string_view name) {
 }
 } // namespace
 
-Moses::Moses(const Options &opts) : option(opts) {}
+Moses::Moses(const CliOptions &opts) : option(opts) {}
 
-Options Moses::parse_options() {
-  Options options;
+CliOptions Moses::parse_options() {
+  CliOptions options;
   options.use_cmake = parse_input<bool>("Use CMake?");
   options.app_name = parse_input<string>("App name");
   if (options.use_cmake) {
@@ -44,8 +42,8 @@ Options Moses::parse_options() {
   return options;
 }
 
-Options Moses::parse_new_options(const std::vector<std::string> &args) {
-  Options options;
+CliOptions Moses::parse_new_options(const std::vector<std::string> &args) {
+  CliOptions options;
   options.target_dir = args.at(0);
   options.app_name = fs::path(options.target_dir).filename().string();
 
@@ -95,8 +93,7 @@ void Moses::exec() {
     base_path = option.target_dir;
     if (fs::exists(base_path)) {
       throw std::runtime_error(
-          std::format("directory '{}' already exists",
-                      base_path.string()));
+          std::format("directory '{}' already exists", base_path.string()));
     }
   } else {
     base_path = fs::current_path();
@@ -158,13 +155,52 @@ void Moses::file_exist_or_create(std::string_view file_name,
 
 std::string Moses::build_cmake_template() {
   auto cmake_gtest_template_addon =
-      std::format(moses::GTEST_TEMPLATE, option.app_name);
+      std::format(GTEST_TEMPLATE, option.app_name);
 
   if (!option.add_gtest)
     cmake_gtest_template_addon = "";
 
-  return std::format(moses::CMAKE_TEMPLATE,
-                     option.cmake_version.value_or(
-                         detect_cmake_version()),
+  return std::format(CMAKE_TEMPLATE,
+                     option.cmake_version.value_or(detect_cmake_version()),
                      option.app_name, cmake_gtest_template_addon);
+}
+
+template <typename T> T parse_input(std::string_view prompt) {
+  constexpr bool is_boolean = std::same_as<T, bool>;
+  std::cout << termcolor::blue << prompt << (is_boolean ? " y/n: " : ": ")
+            << termcolor::reset;
+
+  if constexpr (is_boolean) {
+    char result;
+    std::cin >> result;
+
+    result =
+        static_cast<char>(std::tolower(static_cast<unsigned char>(result)));
+
+    if (result != 'y' && result != 'n') {
+      throw std::runtime_error(
+          std::format("invalid format, expected y/n got {}", result));
+    }
+
+    return result == 'y';
+  }
+
+  T value;
+
+  if (!(std::cin >> value)) {
+
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    throw std::runtime_error("invalid format");
+  }
+
+  return value;
+}
+
+void print_usage() {
+  std::cout << "usage:\n"
+            << "  moses               interactive scaffolding\n"
+            << "  moses new <dir>      scaffold a non-interactively into "
+               "<dir> (cmake + readme + gitignore)\n";
 }

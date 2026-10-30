@@ -7,14 +7,14 @@ enable_testing()
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_executable(${PROJECT_NAME})
-target_sources(${PROJECT_NAME} PRIVATE src/main.cpp src/moses.cpp src/moses.hpp)
+target_sources(${PROJECT_NAME} PRIVATE src/main.cpp src/moses.cpp src/moses.h)
 target_link_libraries(${PROJECT_NAME} PRIVATE termcolor::termcolor)
 
 include(GNUInstallDirs)
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 add_executable(${PROJECT_NAME}_tests)
-target_sources(${PROJECT_NAME}_tests PRIVATE tests/moses_spec.cpp src/moses.cpp src/moses.hpp)
+target_sources(${PROJECT_NAME}_tests PRIVATE tests/moses_spec.cpp src/moses.cpp src/moses.h)
 target_include_directories(${PROJECT_NAME}_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(${PROJECT_NAME}_tests PRIVATE GTest::gtest_main  termcolor::termcolor)
 

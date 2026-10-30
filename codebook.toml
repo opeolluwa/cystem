@@ -1,2 +1,5 @@
-words = ["cmake"]
+words = [
+    "Cli",
+    "cmake",
+]
 ignore_paths = ["projects/calculator/CMakeLists.txt"]

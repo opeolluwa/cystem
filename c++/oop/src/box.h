@@ -11,6 +11,7 @@ public:
   // Box() {}; // default constructor;
   Box() = default; // another style for default
   Box(double lengthValue, double widthValue, double heightValue);
+  explicit Box(double side);
   double volume();
 };
 

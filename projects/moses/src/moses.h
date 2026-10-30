@@ -1,23 +1,50 @@
-#pragma once
+#ifndef MOSES_H
+#define MOSES_H
 
 #include <cctype>
-#include <concepts>
-#include <exception>
 #include <filesystem>
-#include <format>
-#include <ios>
-#include <iostream>
-#include <limits>
 #include <optional>
-#include <stdexcept>
 #include <string>
 #include <string_view>
 #include <termcolor/termcolor.hpp>
-#include <type_traits>
 #include <vector>
 
-namespace moses {
 
+struct CliOptions {
+
+  std::string app_name;
+  bool use_cmake;
+  std::optional<std::string> cmake_version;
+  bool add_readme;
+  bool add_gtest;
+  std::string target_dir;
+  bool non_interactive = false;
+    std::vector<std::string> dirs;
+};
+
+class Moses {
+private:
+  CliOptions option;
+  std::filesystem::path base_path;
+  std::string build_cmake_template();
+  void file_exist_or_create(std::string_view file_name,
+                            std::string_view content);
+
+public:
+  Moses() = default;
+  explicit Moses(const CliOptions &opts);
+  static CliOptions parse_new_options(const std::vector<std::string> &args);
+  static std::string detect_cmake_version();
+  CliOptions parse_options();
+  void exec();
+};
+
+void print_usage();
+
+template <typename T> T parse_input(std::string_view prompt);
+
+
+// templates 
 constexpr auto CMAKE_TEMPLATE = R"(cmake_minimum_required(VERSION {0})
     project({1})
 
@@ -151,69 +178,4 @@ TEST({1}Test, BasicAssertions) {{
   EXPECT_EQ(1, 1);
 }}
 )";
-
-
-struct Options {
-  std::vector<std::string> dirs;
-  std::string app_name;
-  bool use_cmake;
-  std::optional<std::string> cmake_version;
-  bool add_readme;
-  bool add_gtest;
-  std::string target_dir;
-  bool non_interactive = false;
-};
-
-class Moses {
-private:
-  Options option;
-  std::filesystem::path base_path;
-  std::string build_cmake_template();
-  void file_exist_or_create(std::string_view file_name,
-                            std::string_view content);
-
-public:
-  Moses() = default;
-  explicit Moses(const Options &opts);
-  static Options parse_new_options(const std::vector<std::string> &args);
-  static std::string detect_cmake_version();
-  Options parse_options();
-  void exec();
-};
-
-void print_usage();
-
-template <typename T> T parse_input(std::string_view prompt) {
-  constexpr bool is_boolean = std::same_as<T, bool>;
-  std::cout << termcolor::blue << prompt << (is_boolean ? " y/n: " : ": ")
-            << termcolor::reset;
-
-  if constexpr (is_boolean) {
-    char result;
-    std::cin >> result;
-
-    result =
-        static_cast<char>(std::tolower(static_cast<unsigned char>(result)));
-
-    if (result != 'y' && result != 'n') {
-      throw std::runtime_error(
-          std::format("invalid format, expected y/n got {}", result));
-    }
-
-    return result == 'y';
-  }
-
-  T value;
-
-  if (!(std::cin >> value)) {
-
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-    throw std::runtime_error("invalid format");
-  }
-
-  return value;
-}
-
-}; // namespace moses
+#endif

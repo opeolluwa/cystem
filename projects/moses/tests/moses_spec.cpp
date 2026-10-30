@@ -1,4 +1,4 @@
-#include "src/moses.hpp"
+
 #include <gtest/gtest.h>
 
 // Demonstrate some basic assertions.
