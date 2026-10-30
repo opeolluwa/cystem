@@ -52,7 +52,7 @@ constexpr auto CMAKE_TEMPLATE = R"(cmake_minimum_required(VERSION {0})
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
     add_executable(${{PROJECT_NAME}})
-    target_sources(${{PROJECT_NAME}} PRIVATE src/main.cpp src/{1}.cpp src/{1}.hpp)
+    target_sources(${{PROJECT_NAME}} PRIVATE src/main.cpp src/{1}.cpp src/{1}.h)
     target_link_libraries(${{PROJECT_NAME}} PRIVATE)
 
     {2}
@@ -60,7 +60,7 @@ constexpr auto CMAKE_TEMPLATE = R"(cmake_minimum_required(VERSION {0})
 
 constexpr auto GTEST_TEMPLATE = R"(enable_testing()
     add_executable(${{PROJECT_NAME}}_tests)
-    target_sources(${{PROJECT_NAME}}_tests PRIVATE tests/{0}_spec.cpp src/{0}.cpp src/{0}.hpp)
+    target_sources(${{PROJECT_NAME}}_tests PRIVATE tests/{0}_spec.cpp src/{0}.cpp src/{0}.h)
     target_include_directories(${{PROJECT_NAME}}_tests PRIVATE ${{CMAKE_CURRENT_SOURCE_DIR}})
     target_link_libraries(${{PROJECT_NAME}}_tests PRIVATE GTest::gtest_main)
 
@@ -153,7 +153,7 @@ _deps
 build
 )";
 
-constexpr auto MAIN_TEMPLATE = R"(#include "{0}.hpp"
+constexpr auto MAIN_TEMPLATE = R"(#include "{0}.h"
 
 int main() {{
   return 0;
@@ -167,11 +167,11 @@ namespace {0} {{
 }} // namespace {0}
 )";
 
-constexpr auto APP_SOURCE_TEMPLATE = R"(#include "{0}.hpp"
+constexpr auto APP_SOURCE_TEMPLATE = R"(#include "{0}.h"
 
 )";
 
-constexpr auto SPEC_TEMPLATE = R"(#include "src/{0}.hpp"
+constexpr auto SPEC_TEMPLATE = R"(#include "src/{0}.h"
 #include <gtest/gtest.h>
 
 TEST({1}Test, BasicAssertions) {{

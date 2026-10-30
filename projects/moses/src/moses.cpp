@@ -112,7 +112,7 @@ void Moses::exec() {
     auto ns_name = to_identifier(option.app_name);
     auto header_content = std::format(APP_HEADER_TEMPLATE, ns_name);
     auto source_content = std::format(APP_SOURCE_TEMPLATE, option.app_name);
-    file_exist_or_create(std::format("src/{}.hpp", option.app_name),
+    file_exist_or_create(std::format("src/{}.h", option.app_name),
                          header_content);
     file_exist_or_create(std::format("src/{}.cpp", option.app_name),
                          source_content);
