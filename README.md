@@ -31,3 +31,10 @@ System programmming (Backend and Linux) Roadmap
 - Understanding C++ codebases: How the project is structures, the build system, how it's shipped, and interfaced with other languages like JS, Python, Rust
 - Understand C++ convection c++ 11 and beyond (since I'm starting with C++17), see how older code bases were written 
 - <https://github.com/mongodb/mongo>, <https://github.com/nlohmann/json>
+
+## Links 
+- [Why C++ is so “Hard” to Learn](https://adamtcroft.com/why-c-is-so-hard-to-learn/)
+- [Low-Latency C++ Systems Engineering](https://books.google.com.ng/books/about/Low_Latency_C++_Systems_Engineering.html?id=2OUN0gEACAAJ&redir_esc=y)
+- [Awesome C++](https://awesomecpp.com/)
+- [C by Example](https://www.cbyexample.com/)
+- [Building Databases from scratch](https://www.youtube.com/watch?v=Xk5W9cHdz40&list=PLWoOSZbmib_cr7zRfAkPkoa9m2uYsYDug&index=11)
