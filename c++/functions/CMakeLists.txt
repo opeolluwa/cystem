@@ -4,7 +4,9 @@ project(functions)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(${PROJECT_NAME})
+add_executable(${PROJECT_NAME}
+        src/main.cpp
+        src/functions.h)
 target_sources(${PROJECT_NAME} PRIVATE
-src/main.cpp src/functions.cpp src/functions.hpp)
+src/main.cpp src/functions.cpp src/functions.h)
 target_link_libraries(${PROJECT_NAME} PRIVATE)

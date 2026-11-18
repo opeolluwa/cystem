@@ -1,5 +1,6 @@
-#include "functions.hpp"
+#include "functions.h"
+#include <iostream>
 
 int main() {
-  return 0;
+  call_alice("alec");
 }
