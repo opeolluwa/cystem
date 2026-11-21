@@ -1,6 +1,6 @@
 # cystem
 
-System programmming (Backend and Linux) Roadmap
+System programmming (Backend, Compilers, Databases & Linux) Roadmap
 
 ## Languages
 
@@ -8,11 +8,17 @@ System programmming (Backend and Linux) Roadmap
 - C++ language
 - Rust language
 
-## Books
+## Books & Study plan 
 
-- Beginning C++17: From Novice to Professional
+- Beginning C++17: From Novice to Professional ✅
+- C++17 Quick Syntax Reference ✅
+- Beginning C++20: From Novice to Professional
+- Data Structure and Algorithm in C++
 - Modern C Programming
 - CS:APP
+- Crafting Interpreters
+- Operating Systems: Three Easy Pieces
+- Database Internals
 - Linux Kernel Development
 - Linux Bible
 - Modern Operating Systems
